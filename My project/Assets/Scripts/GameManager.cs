@@ -5,13 +5,19 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
     public InputAction moveAction;
     public Transform level;
     public float tiltSpeed = 5f;
     // Public for testing, doesn't need to be public in final version
     public float maxTilt = 20f;
     public TextMeshProUGUI timerText;
-
+    public int score = 0;
+    public TextMeshProUGUI scoreText;
+    private void Awake()
+    {
+        Instance = this;
+    }
     private Vector2 moveInput;
     void OnEnable()
     {
@@ -37,7 +43,11 @@ public class GameManager : MonoBehaviour
         level.rotation = Quaternion.Slerp(level.rotation, targetRotation, Time.deltaTime * tiltSpeed);
         // Update timer text
         float time = Time.timeSinceLevelLoad;
-        timerText.text = "Time: " + time.ToString("F2") + "s";
-        
+        timerText.text = time.ToString("F2") + "s";
+        scoreText.text = "Score: " + score;
+    }
+    public void AddScore(int amount)
+    {
+        score += amount;
     }
 }
