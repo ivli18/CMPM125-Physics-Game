@@ -873,7 +873,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &1394279586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,6 +1112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b0dd4a6a7edb474986619e7619db857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  player: {fileID: 1324947654}
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -1202,10 +1203,7 @@ MonoBehaviour:
       m_Flags: 8
     m_Flags: 0
   level: {fileID: 1863288329}
-  tiltSpeed: 5
-  maxTilt: 20
   timerText: {fileID: 1485498606}
-  score: 0
   scoreText: {fileID: 1816350720}
 --- !u!4 &1575081024
 Transform:
@@ -1419,7 +1417,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863288325}
-  m_Material: {fileID: 13400000, guid: 04d8e5feaecb2ce4d9076a837be2de9d, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
