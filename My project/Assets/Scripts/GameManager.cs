@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
     private float maxTilt = 20f;
     private float groundForce = 10f;
     private float assistForce = 15f;
-    private float normalFriction = 20f;
-    private float iceFriction = 0.1f;
+    private float normalFriction = 1f;
+    private float iceFriction = 0.3f;
     public TextMeshProUGUI timerText;
     private int score = 0;
     public TextMeshProUGUI scoreText;
@@ -54,32 +54,31 @@ public class GameManager : MonoBehaviour
     }
     void FixedUpdate()
     {
+        bool grounded = Physics.Raycast(transform.position, Vector3.down, .3f);
         // // Material detection
-        // RaycastHit hit;
-        // bool grounded = Physics.Raycast(transform.position, Vector3.down, 1.2f);
-        // if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.2f))
-        // {
-        //     if (hit.collider.sharedMaterial != null)
-        //     {
-        //         Debug.Log(hit.collider.sharedMaterial.name);
-        //     }
-        // }
-        // // Material handling
-        // if (grounded)
-        // {
-        //     if (hit.collider.sharedMaterial != null && hit.collider.sharedMaterial.name == "Ice Physics Material")
-        //     {
-        //         playerObject.linearDamping = iceFriction;
-        //     }
-        //     else
-        //     {
-        //         playerObject.linearDamping = normalFriction;
-        //     }
-        // }
-        // else
-        // {
-        //     playerObject.linearDamping = 0f;
-        // }
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1.2f))
+        {
+            if (hit.collider.sharedMaterial != null)
+            {
+                Debug.Log(hit.collider.sharedMaterial.name);
+            }
+        }
+        // Material handling
+        if (grounded)
+        {
+            if (hit.collider.sharedMaterial != null && hit.collider.sharedMaterial.name == "Ice Physics Material")
+            {
+                playerObject.linearDamping = iceFriction;
+            }
+            else
+            {
+                playerObject.linearDamping = normalFriction;
+            }
+        }
+        else
+        {
+            playerObject.linearDamping = 0f;
+        }
 
         // Level tilting
         float tiltX = input.y * maxTilt;
@@ -89,7 +88,7 @@ public class GameManager : MonoBehaviour
         // Ball movement asisstance
         Vector3 tiltDir = Vector3.ProjectOnPlane(Vector3.down, level.up).normalized;
         playerObject.AddForce(Vector3.down * groundForce, ForceMode.Acceleration);
-        if (input != Vector2.zero)
+        if (input != Vector2.zero && grounded)
         {
             playerObject.AddForce(tiltDir * assistForce, ForceMode.Acceleration);
         }
