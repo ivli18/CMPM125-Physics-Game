@@ -8,10 +8,10 @@ public class WinArea : MonoBehaviour
     // This script can be attached to objects that should cause the player to win when they collide with them.
 
     private CheckpointManager checkpointManager;
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         // Check if the colliding object is the player
-        if (other.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             SceneManager.LoadScene(levelToLoad);
         }
